@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://flyaway2005.github.io/fangyu-chang.github.io/sitemap-index.xml
+Sitemap: https://flyaway2005.github.io/sitemap-index.xml

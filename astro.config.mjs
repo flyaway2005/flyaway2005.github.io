@@ -6,7 +6,6 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://flyaway2005.github.io',
-  base: '/fangyu-chang.github.io',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
