@@ -1,0 +1,19 @@
+---
+import type { ProjectCategory } from '../types/project';
+import { categoryLabels, categoryColors } from '../data/categories';
+
+interface Props {
+  category: ProjectCategory;
+}
+
+const { category } = Astro.props;
+const label = categoryLabels[category];
+const color = categoryColors[category];
+---
+
+<span
+  class="inline-block rounded px-2 py-0.5 text-xs font-medium text-white"
+  style={`background-color: ${color}`}
+>
+  {label}
+</span>

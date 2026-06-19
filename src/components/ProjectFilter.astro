@@ -1,0 +1,58 @@
+---
+import { filterOptions } from '../data/categories';
+---
+
+<div class="mb-8" role="group" aria-label="Filter projects by category">
+  <div class="flex flex-wrap gap-2" id="project-filters">
+    {
+      filterOptions.map((option, i) => (
+        <button
+          type="button"
+          data-filter={option.value}
+          class:list={[
+            'rounded-full border px-3 py-1 text-sm',
+            i === 0
+              ? 'border-accent bg-accent text-white'
+              : 'border-gray-300 bg-white text-gray-700 hover:border-accent hover:text-accent',
+          ]}
+        >
+          {option.label}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const filters = document.getElementById('project-filters');
+  const cards = document.querySelectorAll<HTMLElement>('[data-project-category]');
+
+  const activeClasses = ['border-accent', 'bg-accent', 'text-white'];
+  const inactiveClasses = [
+    'border-gray-300',
+    'bg-white',
+    'text-gray-700',
+    'hover:border-accent',
+    'hover:text-accent',
+  ];
+
+  filters?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLButtonElement) || !target.dataset.filter) return;
+
+    const selected = target.dataset.filter;
+
+    filters.querySelectorAll('button').forEach((btn) => {
+      btn.classList.remove(...activeClasses);
+      btn.classList.add(...inactiveClasses);
+    });
+    target.classList.remove(...inactiveClasses);
+    target.classList.add(...activeClasses);
+
+    cards.forEach((card) => {
+      const category = card.dataset.projectCategory;
+      const show = selected === 'all' || category === selected;
+      card.hidden = !show;
+    });
+  });
+</script>

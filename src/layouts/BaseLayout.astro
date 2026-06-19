@@ -1,0 +1,30 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import Nav from '../components/Nav.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEOHead title={title} description={description} path={path} />
+  </head>
+  <body>
+    <Nav />
+    <main class="mx-auto max-w-[760px] px-6 py-10">
+      <slot />
+    </main>
+    <footer class="mx-auto max-w-[760px] px-6 py-8 text-center text-sm text-gray-500">
+      <p>&copy; {new Date().getFullYear()} {site.name}</p>
+    </footer>
+  </body>
+</html>

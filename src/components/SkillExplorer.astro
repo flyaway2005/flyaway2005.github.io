@@ -1,0 +1,127 @@
+---
+import { skillGroups } from '../data/skills';
+import { getPublishedProjects } from '../data/project-utils';
+import ProjectCard from './ProjectCard.astro';
+
+const publishedProjects = getPublishedProjects();
+---
+
+<section class="mb-12" aria-labelledby="skills-heading">
+  <h2 id="skills-heading" class="mb-2 text-sm font-semibold uppercase tracking-wide text-gray-500">
+    Skills
+  </h2>
+  <p class="mb-6 text-sm text-gray-600">Click a skill to see related projects.</p>
+
+  <div class="space-y-5" id="skill-tags">
+    {
+      skillGroups.map((group) => (
+        <div>
+          <h3 class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+            {group.label}
+          </h3>
+          <div class="flex flex-wrap gap-2" role="group" aria-label={group.label}>
+            {
+              group.items.map((skill) => (
+                <button
+                  type="button"
+                  data-skill={skill}
+                  class="skill-tag rounded-full border border-gray-300 bg-white px-3 py-1 text-sm text-gray-700 hover:border-accent hover:text-accent"
+                >
+                  #{skill}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div id="skill-results" class="mt-8 hidden" aria-live="polite">
+    <h3 id="skill-results-title" class="mb-4 text-lg font-semibold text-gray-900"></h3>
+    <div id="skill-results-grid" class="grid gap-6">
+      {
+        publishedProjects.map((project) => (
+          <div
+            class="skill-result-card hidden"
+            data-project-slug={project.slug}
+            data-project-skills={project.skills.join('||')}
+          >
+            <ProjectCard project={project} />
+          </div>
+        ))
+      }
+    </div>
+    <p id="skill-results-empty" class="hidden text-sm text-gray-600">
+      No published projects use this skill yet.
+    </p>
+  </div>
+</section>
+
+<script>
+  const skillTags = document.querySelectorAll<HTMLButtonElement>('.skill-tag');
+  const resultsPanel = document.getElementById('skill-results');
+  const resultsTitle = document.getElementById('skill-results-title');
+  const resultCards = document.querySelectorAll<HTMLElement>('.skill-result-card');
+  const resultsEmpty = document.getElementById('skill-results-empty');
+
+  const activeClasses = ['border-accent', 'bg-accent', 'text-white'];
+  const inactiveClasses = [
+    'border-gray-300',
+    'bg-white',
+    'text-gray-700',
+    'hover:border-accent',
+    'hover:text-accent',
+  ];
+
+  let selectedSkill: string | null = null;
+
+  function clearActiveTags() {
+    skillTags.forEach((tag) => {
+      tag.classList.remove(...activeClasses);
+      tag.classList.add(...inactiveClasses);
+    });
+  }
+
+  function showResultsForSkill(skill: string) {
+    let matchCount = 0;
+
+    resultCards.forEach((card) => {
+      const skills = card.dataset.projectSkills?.split('||') ?? [];
+      const matches = skills.includes(skill);
+      card.classList.toggle('hidden', !matches);
+      if (matches) matchCount += 1;
+    });
+
+    resultsPanel?.classList.remove('hidden');
+    if (resultsTitle) resultsTitle.textContent = `Projects using ${skill}`;
+    resultsEmpty?.classList.toggle('hidden', matchCount > 0);
+    resultsPanel?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  skillTags.forEach((tag) => {
+    tag.addEventListener('click', () => {
+      const skill = tag.dataset.skill;
+      if (!skill) return;
+
+      if (selectedSkill === skill) {
+        selectedSkill = null;
+        clearActiveTags();
+        resultsPanel?.classList.add('hidden');
+        return;
+      }
+
+      selectedSkill = skill;
+      clearActiveTags();
+      tag.classList.remove(...inactiveClasses);
+      tag.classList.add(...activeClasses);
+      showResultsForSkill(skill);
+    });
+  });
+
+  const skillFromUrl = new URLSearchParams(window.location.search).get('skill');
+  if (skillFromUrl) {
+    const matchingTag = Array.from(skillTags).find((tag) => tag.dataset.skill === skillFromUrl);
+    matchingTag?.click();
+  }
+</script>

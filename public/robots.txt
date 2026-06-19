@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fangyu-chang.github.io/sitemap-index.xml

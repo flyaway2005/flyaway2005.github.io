@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectFilter from '../../components/ProjectFilter.astro';
+import { site } from '../../data/site';
+import { getPublishedProjects } from '../../data/project-utils';
+
+const publishedProjects = getPublishedProjects();
+---
+
+<BaseLayout
+  title="Projects"
+  description={`${site.name} — portfolio projects in LLM, agentic AI, data analytics, and applied data science. ${site.tagline}`}
+  path="/projects"
+>
+  <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900">Projects</h1>
+  <p class="mb-8 text-gray-600">
+    {publishedProjects.length} projects across LLM, agentic AI, analytics, and applied data science, drawn from
+    SMU MITB coursework and hands-on business context.
+  </p>
+
+  <ProjectFilter />
+
+  <div class="grid gap-6" id="project-grid">
+    {
+      publishedProjects.map((project) => (
+        <div data-project-category={project.category}>
+          <ProjectCard project={project} />
+        </div>
+      ))
+    }
+  </div>
+</BaseLayout>

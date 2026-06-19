@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SkillExplorer from '../components/SkillExplorer.astro';
+import { site } from '../data/site';
+import { getPublishedProjects, isFeaturedOnAbout } from '../data/project-utils';
+
+const publishedProjects = getPublishedProjects();
+const featuredProjects = publishedProjects.filter((project) => isFeaturedOnAbout(project));
+const homeProjects =
+  featuredProjects.length >= 3
+    ? featuredProjects.slice(0, 3)
+    : [
+        ...featuredProjects,
+        ...publishedProjects
+          .filter((project) => !isFeaturedOnAbout(project))
+          .slice(0, 3 - featuredProjects.length),
+      ];
+
+const pageDescription = `${site.tagline} ${site.openTo}`;
+---
+
+<BaseLayout title={site.name} description={pageDescription} path="/">
+  <section class="mb-12">
+    <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900">
+      {site.name}
+    </h1>
+    <p class="mb-6 text-lg text-accent">{site.tagline}</p>
+    <div class="space-y-4 leading-relaxed text-gray-700">
+      {site.bio.map((paragraph) => <p>{paragraph}</p>)}
+      <p>{site.openTo}</p>
+    </div>
+  </section>
+
+  <SkillExplorer />
+
+  <section aria-labelledby="featured-heading">
+    <h2 id="featured-heading" class="mb-6 text-xl font-semibold text-gray-900">
+      Featured Projects
+    </h2>
+    <div class="grid gap-6">
+      {homeProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+    <p class="mt-8">
+      <a href="/projects" class="text-sm font-medium text-accent hover:underline">
+        View all projects &rarr;
+      </a>
+    </p>
+  </section>
+</BaseLayout>

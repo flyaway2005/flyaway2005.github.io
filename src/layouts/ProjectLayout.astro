@@ -1,0 +1,132 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import CategoryTag from '../components/CategoryTag.astro';
+import TechBadge from '../components/TechBadge.astro';
+import type { Project } from '../types/project';
+import { projectTypeLabels } from '../types/project';
+import { getPublishSettings } from '../data/project-utils';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const settings = getPublishSettings(project.slug);
+
+const sections = [
+  { id: 'business-context', title: 'Business Context', content: project.businessContext },
+  { id: 'my-contribution', title: 'My Contribution', content: project.myContribution },
+  { id: 'methodology', title: 'Methodology', content: project.methodology },
+  { id: 'key-results', title: 'Key Results', content: project.keyResults },
+  { id: 'takeaway', title: 'Takeaway', content: project.takeaway },
+] as const;
+
+const showSlides = settings.showSlides === true && Boolean(project.slidesEmbedId);
+const showReport = settings.showReport === true && Boolean(project.reportEmbedId);
+const extraLinks = settings.showExtraLinks === true ? (project.extraLinks ?? []) : [];
+---
+
+<BaseLayout
+  title={project.title}
+  description={project.summary}
+  path={`/projects/${project.slug}`}
+>
+  <article>
+    <header class="mb-10 border-b border-gray-200 pb-8">
+      <div class="mb-3">
+        <CategoryTag category={project.category} />
+      </div>
+      <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900">
+        {project.title}
+      </h1>
+      <p class="mb-2 text-sm font-medium text-gray-600">
+        {projectTypeLabels[project.projectType]}
+      </p>
+      <p class="text-sm text-gray-500">{project.context}</p>
+      {
+        project.techStack.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.techStack.map((tech) => (
+              <TechBadge label={tech} />
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    <div class="space-y-10">
+      {
+        sections.map((section) => (
+          <section aria-labelledby={section.id}>
+            <h2 id={section.id} class="mb-3 text-lg font-semibold text-gray-900">
+              {section.title}
+            </h2>
+            <p class="leading-relaxed text-gray-700">{section.content}</p>
+          </section>
+        ))
+      }
+
+      {
+        extraLinks.map((link, index) => (
+          <section aria-labelledby={`extra-link-${index}`}>
+            <h2 id={`extra-link-${index}`} class="mb-3 text-lg font-semibold text-gray-900">
+              {link.title}
+            </h2>
+            <a
+              href={link.url}
+              class="break-all text-accent hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {link.url}
+            </a>
+          </section>
+        ))
+      }
+
+      {
+        showSlides && (
+          <section aria-labelledby="slides-heading">
+            <h2 id="slides-heading" class="mb-3 text-lg font-semibold text-gray-900">
+              Slides
+            </h2>
+            <div class="aspect-video overflow-hidden rounded-lg border border-gray-200">
+              <iframe
+                src={project.slidesEmbedId}
+                title={`${project.title} slides`}
+                class="h-full w-full"
+                loading="lazy"
+                allowfullscreen
+              />
+            </div>
+          </section>
+        )
+      }
+
+      {
+        showReport && (
+          <section aria-labelledby="report-heading">
+            <h2 id="report-heading" class="mb-3 text-lg font-semibold text-gray-900">
+              Report
+            </h2>
+            <div class="aspect-[4/3] overflow-hidden rounded-lg border border-gray-200">
+              <iframe
+                src={project.reportEmbedId}
+                title={`${project.title} report`}
+                class="h-full w-full"
+                loading="lazy"
+                allowfullscreen
+              />
+            </div>
+          </section>
+        )
+      }
+    </div>
+
+    <p class="mt-12 border-t border-gray-200 pt-8">
+      <a href="/projects" class="text-sm font-medium text-accent hover:underline">
+        &larr; Back to all projects
+      </a>
+    </p>
+  </article>
+</BaseLayout>

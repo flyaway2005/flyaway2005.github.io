@@ -1,0 +1,28 @@
+---
+import type { Project } from '../types/project';
+import CategoryTag from './CategoryTag.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="rounded-lg border border-gray-200 p-5">
+  <div class="mb-3">
+    <CategoryTag category={project.category} />
+  </div>
+  <h2 class="mb-2 text-lg font-semibold text-gray-900">
+    <a href={`/projects/${project.slug}`} class="hover:text-accent">
+      {project.title}
+    </a>
+  </h2>
+  <p class="mb-4 text-sm leading-relaxed text-gray-600">{project.summary}</p>
+  <a
+    href={`/projects/${project.slug}`}
+    class="text-sm font-medium text-accent hover:underline"
+  >
+    View project
+  </a>
+</article>
