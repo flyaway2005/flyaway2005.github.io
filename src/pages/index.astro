@@ -1,22 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import SkillExplorer from '../components/SkillExplorer.astro';
 import { site } from '../data/site';
 import { withBase } from '../utils/path';
-import { getPublishedProjects, isFeaturedOnAbout } from '../data/project-utils';
-
-const publishedProjects = getPublishedProjects();
-const featuredProjects = publishedProjects.filter((project) => isFeaturedOnAbout(project));
-const homeProjects =
-  featuredProjects.length >= 3
-    ? featuredProjects.slice(0, 3)
-    : [
-        ...featuredProjects,
-        ...publishedProjects
-          .filter((project) => !isFeaturedOnAbout(project))
-          .slice(0, 3 - featuredProjects.length),
-      ];
 
 const pageDescription = `${site.tagline} ${site.openTo}`;
 ---
@@ -33,19 +18,19 @@ const pageDescription = `${site.tagline} ${site.openTo}`;
     </div>
   </section>
 
-  <SkillExplorer />
-
-  <section aria-labelledby="featured-heading">
-    <h2 id="featured-heading" class="mb-6 text-xl font-semibold text-gray-900">
-      Featured Projects
+  <section class="rounded-lg border border-gray-200 bg-gray-50 p-6" aria-labelledby="projects-cta-heading">
+    <h2 id="projects-cta-heading" class="mb-2 text-lg font-semibold text-gray-900">
+      Skills &amp; Projects
     </h2>
-    <div class="grid gap-6">
-      {homeProjects.map((project) => <ProjectCard project={project} />)}
-    </div>
-    <p class="mt-8">
-      <a href={withBase('/projects')} class="text-sm font-medium text-accent hover:underline">
-        View all projects &rarr;
-      </a>
+    <p class="mb-4 leading-relaxed text-gray-700">
+      My skills and full project case studies live on the Projects page — browse by category, sort by
+      skill tags, and open any project for methodology, results, and deliverables.
     </p>
+    <a
+      href={withBase('/projects')}
+      class="inline-block text-sm font-medium text-accent hover:underline"
+    >
+      View skills and projects &rarr;
+    </a>
   </section>
 </BaseLayout>

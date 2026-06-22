@@ -1,34 +1,46 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
 import { site } from '../data/site';
 ---
 
 <BaseLayout
   title="Contact"
-  description={`Get in touch with ${site.name} via LinkedIn or email. ${site.openTo}`}
+  description={`Get in touch with ${site.name} via the contact form, LinkedIn, or email. ${site.openTo}`}
   path="/contact"
 >
   <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900">Contact</h1>
-  <p class="mb-4 leading-relaxed text-gray-700">{site.openTo}</p>
-  <p class="mb-10 text-gray-600">Feel free to reach out via LinkedIn or email.</p>
+  <p class="mb-8 leading-relaxed text-gray-700">{site.openTo}</p>
 
-  <ul class="space-y-4">
-    <li>
-      <span class="block text-sm font-medium text-gray-500">LinkedIn</span>
-      <a
-        href={site.linkedin}
-        class="text-accent hover:underline"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        linkedin.com/in/fang-yu-chang
-      </a>
-    </li>
-    <li>
-      <span class="block text-sm font-medium text-gray-500">Email</span>
-      <a href={`mailto:${site.email}`} class="text-accent hover:underline">
-        {site.email}
-      </a>
-    </li>
-  </ul>
+  <section class="mb-10" aria-labelledby="contact-form-heading">
+    <h2 id="contact-form-heading" class="mb-4 text-lg font-semibold text-gray-900">
+      Send a message
+    </h2>
+    <ContactForm />
+  </section>
+
+  <section aria-labelledby="contact-links-heading">
+    <h2 id="contact-links-heading" class="mb-4 text-lg font-semibold text-gray-900">
+      Or reach me directly
+    </h2>
+    <ul class="space-y-4">
+      <li>
+        <span class="block text-sm font-medium text-gray-500">LinkedIn</span>
+        <a
+          href={site.linkedin}
+          class="text-accent hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          linkedin.com/in/fang-yu-chang
+        </a>
+      </li>
+      <li>
+        <span class="block text-sm font-medium text-gray-500">Email</span>
+        <a href={`mailto:${site.email}`} class="text-accent hover:underline">
+          {site.email}
+        </a>
+      </li>
+    </ul>
+  </section>
 </BaseLayout>
