@@ -1,0 +1,1 @@
+function i(t,c){typeof window.gtag=="function"&&window.gtag("event",t,c)}function l(t,c){i("skill_click",{skill_name:t,skill_action:c})}function e(t,c,n){i("project_click",{project_slug:t,project_title:c,link_type:n})}export{e as a,l as t};
