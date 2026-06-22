@@ -1,0 +1,23 @@
+<script>
+  import { trackProjectClick } from '../utils/analytics';
+
+  const grid = document.getElementById('project-grid');
+
+  grid?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const link = target.closest('a');
+    if (!link || !grid.contains(link)) return;
+
+    const card = link.closest<HTMLElement>('[data-project-slug]');
+    if (!card) return;
+
+    const projectSlug = card.dataset.projectSlug;
+    const projectTitle = card.dataset.projectTitle;
+    if (!projectSlug || !projectTitle) return;
+
+    const linkType = link.textContent?.trim().toLowerCase() === 'view project' ? 'cta' : 'title';
+    trackProjectClick(projectSlug, projectTitle, linkType);
+  });
+</script>

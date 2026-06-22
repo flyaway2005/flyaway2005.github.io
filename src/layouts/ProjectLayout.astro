@@ -8,6 +8,7 @@ import { getPublishSettings } from '../data/project-utils';
 import { sortBySkillOrder } from '../data/skills';
 import { withBase } from '../utils/path';
 import { driveImageUrl } from '../utils/drive';
+import ProjectViewAnalytics from '../components/ProjectViewAnalytics.astro';
 
 interface Props {
   project: Project;
@@ -40,6 +41,7 @@ const techStack = sortBySkillOrder(project.techStack);
   description={project.summary}
   path={`/projects/${project.slug}`}
 >
+  <ProjectViewAnalytics projectSlug={project.slug} projectTitle={project.title} />
   <article>
     <header class="mb-10 border-b border-gray-200 pb-8">
       <div class="mb-3">
@@ -158,9 +160,3 @@ const techStack = sortBySkillOrder(project.techStack);
     </p>
   </article>
 </BaseLayout>
-
-<script define:vars={{ projectSlug: project.slug, projectTitle: project.title }}>
-  import { trackProjectView } from '../utils/analytics';
-
-  trackProjectView(projectSlug, projectTitle);
-</script>
