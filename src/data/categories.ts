@@ -3,14 +3,14 @@ import type { ProjectCategory } from '../types/project';
 export const categoryLabels: Record<ProjectCategory, string> = {
   llm: 'LLM',
   'agentic-ai': 'Agentic AI',
-  'data-analytics': 'Data Analytics',
+  'data-science': 'Data Science',
   other: 'Other',
 };
 
 export const categoryColors: Record<ProjectCategory, string> = {
   llm: '#7c3aed',
   'agentic-ai': '#4f46e5',
-  'data-analytics': '#0d9488',
+  'data-science': '#0d9488',
   other: '#d97706',
 };
 
@@ -18,6 +18,6 @@ export const filterOptions: Array<{ value: 'all' | ProjectCategory; label: strin
   { value: 'all', label: 'All' },
   { value: 'llm', label: 'LLM' },
   { value: 'agentic-ai', label: 'Agentic AI' },
-  { value: 'data-analytics', label: 'Data Analytics' },
+  { value: 'data-science', label: 'Data Science' },
   { value: 'other', label: 'Other' },
 ];

@@ -113,7 +113,7 @@ export const projects: Project[] = [
   {
     slug: "salary-benchmarking",
     title: "Closing the Gap: A Data-Driven Solution for Salary Mismatch in Hiring",
-    category: "other",
+    category: "data-science",
     projectType: "group",
     context: "ISSS621 Data Science for Business",
     summary: "A salary prediction model benchmarked against the broader labor market, paired with negotiation metrics and a feedback loop, built to reduce offer rejections caused by salary mismatch in Data Science hiring.",
@@ -138,7 +138,7 @@ export const projects: Project[] = [
   {
     slug: "inventory-optimization",
     title: "Intelligent Inventory Optimization System",
-    category: "other",
+    category: "data-science",
     projectType: "group",
     context: "IS602 Spreadsheet Modeling for Decision Making",
     summary: "A three-stage spreadsheet model for retail inventory planning: trade-off and sensitivity analysis to set cost-optimal service levels, a demand forecasting and order optimization model, and a Monte Carlo simulation stress-testing the resulting policy against real-world demand uncertainty.",

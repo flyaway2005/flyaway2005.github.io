@@ -1,4 +1,4 @@
-export type ProjectCategory = 'llm' | 'agentic-ai' | 'data-analytics' | 'other';
+export type ProjectCategory = 'llm' | 'agentic-ai' | 'data-science' | 'other';
 
 export type ProjectType = 'group' | 'personal';
 
