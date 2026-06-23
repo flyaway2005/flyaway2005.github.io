@@ -1,5 +1,15 @@
 export type ProjectCategory = 'llm' | 'agentic-ai' | 'data-science' | 'other';
 
+export type ProjectTopic =
+  | 'hr-talent'
+  | 'legal'
+  | 'labour-market'
+  | 'financial-inclusion'
+  | 'social-analytics'
+  | 'operations'
+  | 'hospitality'
+  | 'ai-systems';
+
 export type ProjectType = 'group' | 'personal';
 
 export const projectTypeLabels: Record<ProjectType, string> = {
@@ -11,6 +21,7 @@ export interface Project {
   slug: string;
   title: string;
   category: ProjectCategory;
+  topic: ProjectTopic;
   projectType: ProjectType;
   context: string;
   summary: string;

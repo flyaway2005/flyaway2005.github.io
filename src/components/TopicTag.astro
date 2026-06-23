@@ -1,0 +1,19 @@
+---
+import type { ProjectTopic } from '../types/project';
+import { topicLabels, topicColors } from '../data/topics';
+
+interface Props {
+  topic: ProjectTopic;
+}
+
+const { topic } = Astro.props;
+const label = topicLabels[topic];
+const color = topicColors[topic];
+---
+
+<span
+  class="inline-block rounded border px-2 py-0.5 text-xs font-medium"
+  style={`border-color: ${color}; color: ${color}`}
+>
+  {label}
+</span>

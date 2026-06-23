@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import CategoryTag from '../components/CategoryTag.astro';
+import TopicTag from '../components/TopicTag.astro';
 import TechBadge from '../components/TechBadge.astro';
 import type { Project } from '../types/project';
 import { projectTypeLabels } from '../types/project';
@@ -44,8 +45,9 @@ const techStack = sortBySkillOrder(project.techStack);
   <ProjectViewAnalytics projectSlug={project.slug} projectTitle={project.title} />
   <article>
     <header class="mb-10 border-b border-gray-200 pb-8">
-      <div class="mb-3">
+      <div class="mb-3 flex flex-wrap gap-2">
         <CategoryTag category={project.category} />
+        <TopicTag topic={project.topic} />
       </div>
       <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900">
         {project.title}

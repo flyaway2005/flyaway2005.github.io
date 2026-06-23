@@ -1,6 +1,7 @@
 ---
 import type { Project } from '../types/project';
 import CategoryTag from './CategoryTag.astro';
+import TopicTag from './TopicTag.astro';
 import TechBadge from './TechBadge.astro';
 import { sortBySkillOrder } from '../data/skills';
 import { withBase } from '../utils/path';
@@ -15,8 +16,9 @@ const techStack = sortBySkillOrder(project.techStack);
 ---
 
 <article class="rounded-lg border border-gray-200 p-5">
-  <div class="mb-3">
+  <div class="mb-3 flex flex-wrap gap-2">
     <CategoryTag category={project.category} />
+    <TopicTag topic={project.topic} />
   </div>
   <h2 class="mb-2 text-lg font-semibold text-gray-900">
     <a href={projectHref} class="hover:text-accent">
